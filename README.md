@@ -13,15 +13,15 @@ At the very least set $twitterConsumerKey, $twitterConsumerSecret, $dbReadUserna
 
 ##Demo 
 
-There is a loginless and stateless demo [available here].
+There is a loginless and stateless demo [available here](http://kylethielk.github.io/DailyOje).
 
 ##Screens
 
-![Homepage](/screenshots/Screenshot-homepage.png "Homepage")
+![Homepage](/screenshots/Screenshot-homepage.png?raw=true "Homepage")
 
-![Login Screen](/screenshots/Screenshot-login "Login Screen")
+![Login Screen](/screenshots/Screenshot-login.png?raw=true "Login Screen")
 
-![Sample Note](/screenshots/Screenshot-sample.png "Sample Note")
+![Sample Note](/screenshots/Screenshot-sample.png?raw=true "Sample Note")
 
 ##License
 
