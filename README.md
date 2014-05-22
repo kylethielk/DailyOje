@@ -19,7 +19,7 @@ There is a loginless and stateless demo [available here].
 
 ![Homepage](/screenshots/Screenshot-homepage.png?raw=true "Homepage")
 
-![Login Screen](/screenshots/Screenshot-login?raw=true "Login Screen")
+![Login Screen](/screenshots/Screenshot-login.png?raw=true "Login Screen")
 
 ![Sample Note](/screenshots/Screenshot-sample.png?raw=true "Sample Note")
 
