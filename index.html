@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DailyOje - Distraction Free Writing</title>
+    <link rel="stylesheet" type="text/css" href="css/googlefont.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <script src="thirdjs/jquery.min.js"></script>
+    <script src="thirdjs/jquery.simplePagination.js"></script>
+    <script src="dailyoje.full.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+
+            OJE.checkForMobile();
+            OJE.attachListeners();
+
+
+            $("#initialEditable").attr("contentEditable", "true");
+
+            OJE.rootUrl = "<?php echo root_url(); ?>";
+            OJE.edit = true;
+
+
+            $("#initialEditable").focus();
+            OJE.loggedIn = false;
+
+          
+
+            OJE.initialize("initialEditable", "initialTitle", $("#emptyText").html(), $("#emptyTitleText").html());
+            OJE.setupMenu();
+
+        });
+    </script>
+</head>
+<body>
+<div class="force-viewport-margin">
+
+    <div id="wrapper">
+        <h1 contenteditable="true" id="initialTitle" class="editable-title"></h1>
+
+        <div class="editable editable-initial" id="initialEditable">
+        </div>
+        <div id="loadingNoteIndicator" class="loading-note-box" style="display: none">
+            <img src="images/loading.horizontal.gif"/>
+        </div>
+    </div>
+</div>
+
+<div id="footer">
+    <span class="footer-padding">
+
+        
+
+        <span id="shareButton" class="right-aligned"      style="display: none">
+            <a href="javascript:void(0);" onclick="OJE.Note.showShare();" class="share-button">+ Share</a>
+        </span>
+
+        
+        <span class="right-aligned" id="fontSizeContainer">
+            Font Size:
+            <select name="fontSize" id="fontSize" onchange="OJE.refreshSettings();">
+                <option value="16px">16px</option>
+                <option value="18px">18px</option>
+                <option value="20px" selected>20px</option>
+                <option value="22px">22px</option>
+                <option value="24px">24px</option>
+            </select>
+        </span>
+
+
+
+      
+            <span class="save-status save-status-unsaved left-aligned"
+                  id="saveStatus" >UnSaved</span>
+
+
+            <span id="counts" class="right-aligned">Words: <span id="wordCount">0</span>,
+            Characters: <span id="characterCount">0</span>
+        </span>
+
+
+
+
+
+        <div id="shareBox" class="share-box" style="display: none">
+            <p>Copy/Paste URL to share.
+
+                    If you make this note private, this link will no longer be valid.
+
+            </p>
+            <input type="text" id="shareUrl" name="shareUrl"> <input type="button" value="Ok"
+                                                                     onclick="OJE.Note.hideShare();"/>
+        </div>
+
+         <div id="deleteBox" class="delete-box" style="display: none">
+             <p>Are you sure you want to delete this note? It cannot be undone.
+             </p>
+             <input type="button" value="Yes, Delete Note" onclick="OJE.Note.deleteCurrentNote();"
+                    class="left-aligned"/>
+             <input type="button" value="No, Don't Delete" onclick="OJE.Note.toggleDeleteWarning(false);"
+                    class="right-aligned"/>
+         </div>
+
+
+
+
+
+        </span>
+</div>
+<div id="exportDialog" style="display:none">
+    <div id="exportWindow">
+        <a href="javascript:void(0);" id="exportCloseLink" onclick="OJE.Note.toggleExport(false);">Close</a>
+
+        <p>You can export as plaintext or html.</p>
+        <a href="javascript:void(0);" class="left-aligned grey-button" onclick="OJE.Note.exportText();">Export as
+            Text</a>
+        <a href="javascript:void(0);" class="right-aligned grey-button" onclick="OJE.Note.exportHtml();">Export As
+            HTML</a>
+    </div>
+</div>
+<div id="loginDialog" style="display: none">
+    <div id="loginWindow">
+        <a href="javascript:void(0);" id="loginCloseLink" onclick="OJE.Authenticate.toggleLoginDialog(false);">Close</a>
+
+        <div id="loginContent">
+            <div id="loginRibbon">Login</div>
+            <div id="loginFormContainer">
+                <p id="loginError"></p>
+
+                <form id="loginForm">
+                    <input type="text" id="loginEmail" name="loginEmail" placeholder="Email"/>
+                    <input type="password" id="loginPassword" name="loginPassword" placeholder="Password"/>
+                    <input type="submit" id="loginProcessBtn" value="Login" />
+                    <a href="javascript:void(0);" onclick="OJE.Twitter.startAuthenticate();" id="twitterProcessBtn">
+                        <img src="<?php echo root_url(); ?>images/twitter-icon.png"/> <span>Signin With Twitter</span>
+                    </a>
+                </form>
+                <span id="loginOrLabel">-or-</span>
+            </div>
+            <div id="registerFormContainer" style="display:none">
+                <p id="registerError"></p>
+
+                <form id="registerForm">
+                    <input type="text" id="registerEmail" name="registerEmail" placeholder="Email"/>
+                    <input type="password" id="registerPassword" name="registerPassword"
+                           placeholder="Password (min 6 characters)"/>
+                    <input type="submit" id="registerProcessBtn" value="Register" />
+                </form>
+                <span id="backToLoginText"><a href="javascript:void(0);"
+                                              onclick="OJE.Authenticate.toggleRegisterForm(false);">Back to
+                        Login</a></span>
+            </div>
+            <p id="registerText">...or <a href="javascript:void(0);"
+                                          onclick="OJE.Authenticate.toggleRegisterForm(true);">Register
+                    A New Account.</a></p>
+        </div>
+
+        <img src="<?php echo root_url(); ?>images/loading.horizontal.gif" style="display:none"
+             id="loginFormLoadingIndicator"/>
+
+    </div>
+</div>
+
+
+
+<div id="menu">
+    <div id="menuIcon" title="Click to stick/unstick menu."><span id="daily">Daily</span><span id="oje">OJE</span></div>
+    <div id="menuNavigation" style="display:none">
+        <a href="#">+ New Note</a>
+    </div>
+    <div id="menuContent" style="display: none">
+
+       
+            <div id="signinText">
+                <p>Register/Login to start saving, editing and publishing notes.</p>
+                <a href="javascript:void(0);" onclick="" id="sidebarLoginBtn">
+                    Login/Register
+                </a>
+            </div>
+       
+
+
+        <div id="menuSubLinks">
+            <div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/dailyoje" id="emptyTitleText">DailyOJE - Distraction-Free Writing<span
+            id="placeholderEmptyTitleTextId"></span></script>
+    <script type="text/dailyoje" id="emptyText"><div style="color: #4E4E4E">
+        <p spellcheck="false">I have never been a strong writer and never really
+            enjoyed it. Writing was at best a chore, a necessary but annoying part of everyday life. Then I decided to
+            try writing for myself. Free from the pressure of an audience writing became enjoyable, something I looked
+            forward to everyday.</p>
+
+        <p spellcheck="false">Writing daily has brought me better focus and a clearer mind. It reminds me of the things
+            I've done well and those that I need to work on. It helps me concentrate on the things that really matter
+            and reminds me to avoid the things that don't.</p>
+
+        <p spellcheck="false">I created DailyOJE because I wanted a distraction free way to write daily. I wanted a tool
+            that stayed out of my way. Just the screen and my thoughts.</p>
+
+        <p spellcheck="false">If you just want a quick way to jot down your thoughts, simply start typing. Nothing is
+            recorded, once you leave the page everything is deleted. Login and we will save all of your
+            notes for you. Notes are private by default but can be made public.</p>
+
+        <p spellcheck="false">I hope that DailyOJE can be of some benefit to you. Happy Writing!</p>
+
+        <p spellcheck="false">Kyle</p><span id="placeholderEmptyTextId"></span></div></script>
+</body>
+</html>
