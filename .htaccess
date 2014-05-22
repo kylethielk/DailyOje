@@ -1,0 +1,8 @@
+RewriteEngine on 
+
+#Rewrite to www.
+#RewriteCond %{HTTP_HOST} ^dailyoje.com
+#RewriteRule (.*) http://www.dailyoje.com/$1 [R=301,L]
+
+RewriteRule ^v/([0-9A-Za-z]+)$ /view.php?noteId=$1
+
