@@ -13,7 +13,7 @@ At the very least set $twitterConsumerKey, $twitterConsumerSecret, $dbReadUserna
 
 ##Demo 
 
-There is a loginless and stateless demo [available here].
+There is a loginless and stateless demo [available here](http://kylethielk.github.io/DailyOje).
 
 ##Screens
 
